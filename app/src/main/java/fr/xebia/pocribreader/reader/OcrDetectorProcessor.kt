@@ -15,15 +15,21 @@
  */
 package fr.xebia.pocribreader.reader
 
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.text.TextBlock
 import fr.xebia.pocribreader.reader.ui.camera.GraphicOverlay
+import fr.xebia.pocribreader.result.BankAccountInfoActivity
+import fr.xebia.pocribreader.result.BankAccountManager
 
 /**
  * A very simple Processor which receives detected TextBlocks and adds them to the overlay
  * as OcrGraphics.
  */
-class OcrDetectorProcessor internal constructor(private val mGraphicOverlay: GraphicOverlay<OcrGraphic>?) : Detector.Processor<TextBlock> {
+class OcrDetectorProcessor internal constructor(private val mGraphicOverlay: GraphicOverlay<OcrGraphic>?,
+                                                private val bankAccountManager: BankAccountManager,
+                                                private val activity: AppCompatActivity) : Detector.Processor<TextBlock> {
 
     /**
      * Called by the detector to deliver detection results.
@@ -38,7 +44,15 @@ class OcrDetectorProcessor internal constructor(private val mGraphicOverlay: Gra
         (0 until items.size())
                 .map { items.valueAt(it) }
                 .map { OcrGraphic(mGraphicOverlay, it) }
-                .forEach { mGraphicOverlay?.add(it) }
+                .forEach {
+                    if (bankAccountManager.checkIban(it.textBlock?.value)) {
+                        val intent = Intent(activity, BankAccountInfoActivity::class.java)
+                        intent.putExtra(BankAccountInfoActivity.BANK_ACCOUNT_PARAM, bankAccountManager.bankAccount)
+                        activity.startActivity(intent)
+                        activity.finish()
+                    }
+                    mGraphicOverlay?.add(it)
+                }
     }
 
     /**

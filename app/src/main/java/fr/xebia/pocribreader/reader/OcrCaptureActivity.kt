@@ -27,6 +27,7 @@ import fr.xebia.pocribreader.R
 import fr.xebia.pocribreader.reader.ui.camera.CameraSource
 import fr.xebia.pocribreader.reader.ui.camera.CameraSourcePreview
 import fr.xebia.pocribreader.reader.ui.camera.GraphicOverlay
+import fr.xebia.pocribreader.result.BankAccountManager
 import kotlinx.android.synthetic.main.activity_ocr_capture.*
 import java.io.IOException
 
@@ -40,6 +41,8 @@ class OcrCaptureActivity : AppCompatActivity() {
     // Helper objects for detecting taps and pinches.
     private var scaleGestureDetector: ScaleGestureDetector? = null
     private var gestureDetector: GestureDetector? = null
+
+    private val bankAccountManager = BankAccountManager()
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -125,7 +128,7 @@ class OcrCaptureActivity : AppCompatActivity() {
         // is set to receive the text recognition results and display graphics for each text block
         // on screen.
         val textRecognizer = TextRecognizer.Builder(context).build()
-        textRecognizer.setProcessor(OcrDetectorProcessor(mGraphicOverlay))
+        textRecognizer.setProcessor(OcrDetectorProcessor(mGraphicOverlay, bankAccountManager, this))
 
         if (!textRecognizer.isOperational) {
             // Note: The first time that an app using a Vision API is installed on a

@@ -3,7 +3,7 @@ package fr.xebia.pocribreader.result
 import android.os.Parcel
 import android.os.Parcelable
 
-data class BankAccount(val iban: String, val bic: String, val address: String, val name: String) : Parcelable {
+data class BankAccount(var iban: String, var bic: String, var address: String, var name: String) : Parcelable {
 
     constructor(parcel: Parcel) : this(
             parcel.readString(),
