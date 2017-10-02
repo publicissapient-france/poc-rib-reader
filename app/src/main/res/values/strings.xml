@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PocRibReader</string>
+    <string name="btn_reader">Reader</string>
 </resources>
