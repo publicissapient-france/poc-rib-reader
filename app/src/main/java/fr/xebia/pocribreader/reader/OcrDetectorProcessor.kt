@@ -16,12 +16,19 @@
 package fr.xebia.pocribreader.reader
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.text.TextBlock
 import fr.xebia.pocribreader.reader.ui.camera.GraphicOverlay
 import fr.xebia.pocribreader.result.BankAccountInfoActivity
 import fr.xebia.pocribreader.result.BankAccountManager
+import android.util.SparseArray
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.ResultCallback
+import fr.xebia.pocribreader.address.AddressValidationManager
+
 
 /**
  * A very simple Processor which receives detected TextBlocks and adds them to the overlay
@@ -29,7 +36,11 @@ import fr.xebia.pocribreader.result.BankAccountManager
  */
 class OcrDetectorProcessor internal constructor(private val mGraphicOverlay: GraphicOverlay<OcrGraphic>?,
                                                 private val bankAccountManager: BankAccountManager,
-                                                private val activity: AppCompatActivity) : Detector.Processor<TextBlock> {
+                                                private val activity: AppCompatActivity) : Detector.Processor<TextBlock>, GoogleApiClient.ConnectionCallbacks {
+    var ibanFound = false
+    var addressFound = false
+    var ibanString : String? = String()
+    var addressString : String? = String()
 
     /**
      * Called by the detector to deliver detection results.
@@ -41,18 +52,47 @@ class OcrDetectorProcessor internal constructor(private val mGraphicOverlay: Gra
     override fun receiveDetections(detections: Detector.Detections<TextBlock>) {
         mGraphicOverlay?.clear()
         val items = detections.detectedItems
-        (0 until items.size())
-                .map { items.valueAt(it) }
-                .map { OcrGraphic(mGraphicOverlay, it) }
-                .forEach {
-                    if (bankAccountManager.checkIban(it.textBlock?.value)) {
-                        val intent = Intent(activity, BankAccountInfoActivity::class.java)
-                        intent.putExtra(BankAccountInfoActivity.BANK_ACCOUNT_PARAM, bankAccountManager.bankAccount)
-                        activity.startActivity(intent)
-                        activity.finish()
+
+        AddressValidationManager.init(activity, this)
+
+        if(!ibanFound) {
+            (0 until items.size())
+                    .map { items.valueAt(it) }
+                    .map { OcrGraphic(mGraphicOverlay, it) }
+                    .forEach {
+                        val value = it.textBlock?.value!!
+                        if (bankAccountManager.checkIban(it.textBlock?.value)) {
+                            Log.e("Xebia" , "Iban found " + value)
+                            ibanFound = true
+                            ibanString = it.textBlock?.value
+                        }
+                        mGraphicOverlay?.add(it)
                     }
-                    mGraphicOverlay?.add(it)
-                }
+        }
+        if(!addressFound) {
+            (0 until items.size())
+                    .map { items.valueAt(it) }
+                    .map { OcrGraphic(mGraphicOverlay, it) }
+                    .forEach {
+                        val value = it.textBlock?.value!!
+                        AddressValidationManager.checkAddressValidity(value, ResultCallback{
+                            if(it.count > 0) {
+                                addressFound = true
+                                addressString = it.get(0).toString()
+                                Log.e("Xebia" , "Address found : " + value)
+                            }
+                        })
+                        mGraphicOverlay?.add(it)
+                    }
+        }
+
+        if(addressFound && ibanFound) {
+            bankAccountManager.bankAccount.address = addressString!!
+            val intent = Intent(activity, BankAccountInfoActivity::class.java)
+            intent.putExtra(BankAccountInfoActivity.BANK_ACCOUNT_PARAM, bankAccountManager.bankAccount)
+            activity.startActivity(intent)
+            activity.finish()
+        }
     }
 
     /**
@@ -60,5 +100,11 @@ class OcrDetectorProcessor internal constructor(private val mGraphicOverlay: Gra
      */
     override fun release() {
         mGraphicOverlay?.clear()
+    }
+
+    override fun onConnected(p0: Bundle?) {
+    }
+
+    override fun onConnectionSuspended(p0: Int) {
     }
 }

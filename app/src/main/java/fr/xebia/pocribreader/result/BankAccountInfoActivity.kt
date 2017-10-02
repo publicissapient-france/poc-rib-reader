@@ -33,14 +33,6 @@ class BankAccountInfoActivity : AppCompatActivity(), GoogleApiClient.ConnectionC
 
     override fun onConnected(p0: Bundle?) {
         Log.e("Xebia", "Connected")
-
-        AddressValidationManager.checkAddressValidity("156 Boulevard Haussmann, 75008 Paris", ResultCallback {
-            Log.e("Xebia", "Returned " + it.count)
-
-            for (prediction: AutocompletePrediction in it) {
-                Log.e("Xebia", prediction.getFullText(null).toString())
-            }
-        })
     }
 
     override fun onConnectionSuspended(p0: Int) {

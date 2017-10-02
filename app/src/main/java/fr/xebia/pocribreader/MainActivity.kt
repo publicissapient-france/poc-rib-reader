@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         btn_open_reader.setOnClickListener {
             val cameraIntent = Intent(this, OcrCaptureActivity::class.java)
             cameraIntent.putExtra(OcrCaptureActivity.AutoFocus, true)
-            cameraIntent.putExtra(OcrCaptureActivity.UseFlash, true)
+            cameraIntent.putExtra(OcrCaptureActivity.UseFlash, false)
             startActivity(cameraIntent)
         }
     }

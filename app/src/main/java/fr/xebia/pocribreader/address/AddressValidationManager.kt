@@ -13,7 +13,6 @@ import com.google.android.gms.maps.model.LatLngBounds
 object AddressValidationManager {
     private var mGoogleApiClient: GoogleApiClient? = null
     fun init(context: Context, callbacksListener: GoogleApiClient.ConnectionCallbacks) {
-
         mGoogleApiClient = GoogleApiClient.Builder(context)
                 .addApi(Places.GEO_DATA_API)
                 .addConnectionCallbacks(callbacksListener)
