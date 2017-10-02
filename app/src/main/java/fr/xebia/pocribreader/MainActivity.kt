@@ -1,35 +1,22 @@
 package fr.xebia.pocribreader
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.ResultCallback
-import com.google.android.gms.location.places.AutocompletePrediction
-import fr.xebia.pocribreader.address.AddressValidationManager
+import fr.xebia.pocribreader.reader.OcrCaptureActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        AddressValidationManager.init(this, this)
-    }
-
-    override fun onConnected(p0: Bundle?) {
-        Log.e("Xebia", "Connected")
-
-        AddressValidationManager.checkAddressValidity("156 Boulevard Haussmann, 75008 Paris", ResultCallback {
-            Log.e("Xebia", "Returned " + it.count)
-
-            for (prediction: AutocompletePrediction in it) {
-                Log.e("Xebia", prediction.getFullText(null).toString())
-            }
-        })
-    }
-
-    override fun onConnectionSuspended(p0: Int) {
-        Log.e("Xebia", "Connection suspended :(")
+        btn_open_reader.setOnClickListener {
+            val cameraIntent = Intent(this, OcrCaptureActivity::class.java)
+            cameraIntent.putExtra(OcrCaptureActivity.AutoFocus, true)
+            cameraIntent.putExtra(OcrCaptureActivity.UseFlash, true)
+            startActivity(cameraIntent)
+        }
     }
 }

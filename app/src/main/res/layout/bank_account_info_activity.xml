@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bankAccountInfoTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:text="@string/title_bank_account_info"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bankAccountInfoUserTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:text="@string/label_user"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bankAccountInfoTitle" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bankAccountInfoName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bankAccountInfoUserTitle"
+        tools:text="John Doe" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bankAccountInfoAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bankAccountInfoName"
+        tools:text="156 Boulevard Hausmann\n75008 Paris" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bankAccountInfoIbanTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:text="@string/label_iban"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bankAccountInfoAddress" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bankAccountInfoIban"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bankAccountInfoIbanTitle"
+        tools:text="FR00 0000 0000 0000 0000 000" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bankAccountInfoBicTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:text="@string/label_bic"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bankAccountInfoIban" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bankAccountInfoBic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bankAccountInfoBicTitle"
+        tools:text="AAAAAAAA" />
+
+</android.support.constraint.ConstraintLayout>
