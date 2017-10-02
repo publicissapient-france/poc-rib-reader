@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">PocRibReader</string>
     <string name="btn_reader">Reader</string>
+    <string name="title_bank_account_info">Bank Account Info</string>
+    <string name="label_iban">IBAN:</string>
 </resources>
