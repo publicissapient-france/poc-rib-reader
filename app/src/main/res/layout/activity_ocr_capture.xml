@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.xebia.pocribreader.reader.OcrCaptureActivity">
+    android:keepScreenOn="true">
 
-</android.support.constraint.ConstraintLayout>
+    <fr.xebia.pocribreader.reader.ui.camera.CameraSourcePreview
+        android:id="@+id/camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fr.xebia.pocribreader.reader.ui.camera.GraphicOverlay
+            android:id="@+id/graphic_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </fr.xebia.pocribreader.reader.ui.camera.CameraSourcePreview>
+
+</LinearLayout>
