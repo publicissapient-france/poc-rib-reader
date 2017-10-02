@@ -20,6 +20,8 @@ class BankAccountInfoActivity : AppCompatActivity() {
         bankAccount = intent.getParcelableExtra<BankAccount>(BANK_ACCOUNT_PARAM)
 
         bankAccountInfoIban.text = bankAccount.iban
+        bankAccountInfoAddress.text = bankAccount.address
+        bankAccountInfoBic.text = bankAccount.bic
     }
 
 }

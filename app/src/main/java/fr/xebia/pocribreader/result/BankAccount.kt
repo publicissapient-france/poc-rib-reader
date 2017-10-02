@@ -3,12 +3,19 @@ package fr.xebia.pocribreader.result
 import android.os.Parcel
 import android.os.Parcelable
 
-data class BankAccount(val iban: String) : Parcelable {
+data class BankAccount(val iban: String, val bic: String, val address: String, val name: String) : Parcelable {
 
-    constructor(parcel: Parcel) : this(parcel.readString())
+    constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(iban)
+        parcel.writeString(bic)
+        parcel.writeString(address)
+        parcel.writeString(name)
     }
 
     override fun describeContents(): Int {
@@ -24,4 +31,5 @@ data class BankAccount(val iban: String) : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }
