@@ -10,7 +10,7 @@ import fr.xebia.pocribreader.R
 import fr.xebia.pocribreader.address.AddressValidationManager
 import kotlinx.android.synthetic.main.bank_account_info_activity.*
 
-class BankAccountInfoActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks {
+class BankAccountInfoActivity : AppCompatActivity() {
 
     companion object {
         val BANK_ACCOUNT_PARAM = "BANK_ACCOUNT_PARAM"
@@ -27,16 +27,5 @@ class BankAccountInfoActivity : AppCompatActivity(), GoogleApiClient.ConnectionC
         bankAccountInfoIban.text = bankAccount.iban
         bankAccountInfoAddress.text = bankAccount.address
         bankAccountInfoBic.text = bankAccount.bic
-
-        AddressValidationManager.init(this, this)
     }
-
-    override fun onConnected(p0: Bundle?) {
-        Log.e("Xebia", "Connected")
-    }
-
-    override fun onConnectionSuspended(p0: Int) {
-        Log.e("Xebia", "Connection suspended :(")
-    }
-
 }

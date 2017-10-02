@@ -78,7 +78,7 @@ class OcrDetectorProcessor internal constructor(private val mGraphicOverlay: Gra
                         AddressValidationManager.checkAddressValidity(value, ResultCallback{
                             if(it.count > 0) {
                                 addressFound = true
-                                addressString = it.get(0).toString()
+                                addressString = it.get(0).getFullText(null).toString()
                                 Log.e("Xebia" , "Address found : " + value)
                             }
                         })

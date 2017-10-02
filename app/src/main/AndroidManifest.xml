@@ -24,6 +24,9 @@
         <activity
             android:name=".result.BankAccountInfoActivity"
             android:screenOrientation="portrait" />
-    </application>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="VALUE_GOES_HERE"/>
+    </application>
 </manifest>
